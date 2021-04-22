@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameGUI extends JFrame {
-
+    
     public static ImageIcon background;
     public static PlayerInfoPanel playerInfoPanel;
 
