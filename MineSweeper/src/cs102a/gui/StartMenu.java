@@ -1,5 +1,7 @@
 package cs102a.gui;
 
+import cs102a.gui.model.SmallGrid;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -55,6 +57,27 @@ public class StartMenu extends JFrame {
             start.setVisible(false);
             Settings.settings.setVisible(true);
         });
+
+        JButton exit = new JButton("Exit");
+        exit.setOpaque(false);
+        exit.setBorder(null);
+        exit.setForeground(Color.BLACK);
+        exit.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
+        exit.addActionListener(e -> {
+            start.setVisible(false);
+        });
+
+        setLayout(new GridLayout(5, 1, 2, 2));
+        add(new SmallGrid(3, 3, newGame));
+        add(new SmallGrid(3, 3, loadGame));
+        add(new SmallGrid(3, 3, storeButton));
+        add(new SmallGrid(3, 3, settingButton));
+        add(new SmallGrid(3, 3, exit));
+
+        this.setSize(500, 500);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
