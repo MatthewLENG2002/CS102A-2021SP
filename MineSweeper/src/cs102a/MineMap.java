@@ -11,7 +11,7 @@ public class MineMap {
     int[][] temp;
     int[][] temp2;
     int[][] minemap;
-    int[][] map;
+    public int[][] map;
 
     // when level=1,2,3 , generate map of specific size with negative value represented the mine and other figures represented the number of mines in the 3*3 region
 
