@@ -13,7 +13,7 @@ public class MineMap {
     int[][] minemap;
     int[][] map;
 
-    // when level=1,2,3 , generate map of specific size with -1 represented the mine and other figures represented the number of mines in the 3*3 region
+    // when level=1,2,3 , generate map of specific size with negative value represented the mine and other figures represented the number of mines in the 3*3 region
 
     public MineMap(int level) {
         this.map = mapGenerator(level);
@@ -82,7 +82,7 @@ public class MineMap {
 
         for (int i = 0; i < temp.length; i++) {
             for (int j = 0; j < temp[0].length; j++) {
-                while (map[i][j] == 9) {
+                while (map[i][j] == -9 ) {
                     return mapGenerator(level);
                 }
             }
@@ -118,7 +118,7 @@ public class MineMap {
 
         for (int i = 0; i < temp.length; i++) {
             for (int j = 0; j < temp[0].length; j++) {
-                while (map[i][j] == 9) {
+                while (map[i][j] == -9) {
                     return mapGenerator(level, rowi, coli, minei);
                 }
             }
@@ -135,19 +135,18 @@ public class MineMap {
         for (int i = 0; i < temp.length; i++) {
             for (int j = 0; j < temp[0].length; j++) {
                 int counter = 0;
-                if (temp[i][j] == 1) {
-                    temp2[i][j] = -1;
-                } else {
-                    for (int k = -1; k < 2; k++) {
-                        for (int l = -1; l < 2; l++) {
-                            try {
-                                counter += temp[i + k][j + l];
-                            } catch (Exception e) {
-                            }
+                for (int k = -1; k < 2; k++) {
+                    for (int l = -1; l < 2; l++) {
+                        try {
+                            counter += temp[i + k][j + l];
+                        } catch (Exception e) {
                         }
                     }
-                    temp2[i][j] = counter;
                 }
+                if (temp[i][j] == 1)
+                    temp2[i][j] =-counter;
+                else
+                    temp2[i][j] = counter;
             }
         }
         return temp2;
