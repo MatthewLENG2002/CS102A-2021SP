@@ -2,10 +2,15 @@ package cs102a;
 
 public class Info {
     public static int[] playerScore = new int[2];
+    public static int[] playerFaults = new int[2];
     public static int rowi;
     public static int coli;
     public static int minei;
+    public static int mineLeft;
     public static int round;
-    public static int level;
+    public static int level = 1;
+    public static int roundNow;
+    public static int playerNow;
+    public static int roundLeftTime = 10;
 
 }

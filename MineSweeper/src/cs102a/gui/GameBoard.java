@@ -4,14 +4,19 @@ import cs102a.Info;
 import cs102a.MineMap;
 import cs102a.StatusMap;
 
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameBoard extends JFrame {
     JPanel boardPanel = new JPanel();
+    InfoPanel infoPanel = new InfoPanel();
 
     public GameBoard() {
         super("MineSweeper");
+        Info.playerScore = new int[]{0, 0};
+        Info.playerFaults = new int[]{0, 0};
+        Info.roundNow = 0;
 
         if (Info.level <= 3 && Info.level >= 0) {
             new StatusMap(new MineMap(Info.level).map);
@@ -23,11 +28,12 @@ public class GameBoard extends JFrame {
         }
 
 
-        this.setSize(Info.coli * 20, 30 + Info.rowi * 20);
+        this.setSize(Info.coli * 20, 20 + Info.rowi * 20 * 2);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setLayout(new GridLayout(2, 1));
 
         JMenuBar menubar = new JMenuBar();
         this.setJMenuBar(menubar);
@@ -42,12 +48,12 @@ public class GameBoard extends JFrame {
         JMenuItem item2 = new JMenuItem("Withdraw");
         JMenuItem item3 = new JMenuItem("Cheat");
         item3.addActionListener(e -> {
-            JFrame cheatBoard = new JFrame();
+            JDialog cheatBoard = new JDialog();
             JPanel cheatPanel = new JPanel();
             cheatBoard.setSize(Info.coli * 20, Info.rowi * 20);
             cheatBoard.setVisible(true);
             cheatPanel.setLayout(new GridLayout(Info.rowi, Info.coli));
-            cheatBoard.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            cheatBoard.setDefaultCloseOperation(HIDE_ON_CLOSE);
             for (int i = 0; i < MineMap.map.length; i++) {
                 for (int j = 0; j < MineMap.map[0].length; j++) {
                     GameSquare tempSquare2 = new GameSquare(i + 1, j + 1, true);
@@ -84,11 +90,15 @@ public class GameBoard extends JFrame {
 
         for (int i = 0; i < MineMap.map.length; i++) {
             for (int j = 0; j < MineMap.map[0].length; j++) {
-                GameSquare tempSquare = new GameSquare(i + 1, j + 1);
+                GameSquare tempSquare = new GameSquare(i + 1, j + 1, this);
                 boardPanel.add(tempSquare);
                 tempSquare.setVisible(true);
             }
         }
+
+        add(infoPanel);
+        infoPanel.refresh();
+        new AutoRefresher();
     }
 
 }

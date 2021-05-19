@@ -26,6 +26,9 @@ public class DifficultySelector extends JFrame {
         add(beginner);
         beginner.addActionListener(e -> {
             Info.level = 1;
+            Info.rowi = 9;
+            Info.coli = 9;
+            Info.minei = 10;
         });
 
         JLabel bDescFirstLine = new JLabel("10 mines");
@@ -40,6 +43,9 @@ public class DifficultySelector extends JFrame {
         add(intermediate);
         intermediate.addActionListener(e -> {
             Info.level = 2;
+            Info.rowi = 16;
+            Info.coli = 16;
+            Info.minei = 40;
         });
 
         JLabel iDescFirstLine = new JLabel("40 mines");
@@ -54,6 +60,9 @@ public class DifficultySelector extends JFrame {
         add(advanced);
         advanced.addActionListener(e -> {
             Info.level = 3;
+            Info.rowi = 16;
+            Info.coli = 30;
+            Info.minei = 99;
         });
 
         JLabel aDescFirstLine = new JLabel("99 mines");
@@ -108,7 +117,8 @@ public class DifficultySelector extends JFrame {
                     row = Integer.parseInt(finalWidth.getText());
                     col = Integer.parseInt(finalLength.getText());
                     mine = Integer.parseInt(finalMines.getText());
-                    if (!(row <= 24 && row >= 0) || !(col >= 0 && col <=30) || !(mine >= 0 && mine <=row*col/2 )) throw new IllegalArgumentException("OutOfBounds!");
+                    if (!(row <= 24 && row >= 0) || !(col >= 0 && col <= 30) || !(mine >= 0 && mine <= row * col / 2))
+                        throw new IllegalArgumentException("OutOfBounds!");
 
                 } catch (NumberFormatException ne) {
                     new TimeDialog(this, "Please enter the right figure!", 3);
@@ -117,19 +127,19 @@ public class DifficultySelector extends JFrame {
                     new TimeDialog(this, iae.getMessage(), 3);
                     isValid = false;
                 }
-                if (!isValid){
+                if (!isValid) {
                     this.dispose();
                     new DifficultySelector();
-                }
-                else{
-                    Info.rowi=row;
-                    Info.coli=col;
-                    Info.minei=mine;
+                } else {
+                    Info.rowi = row;
+                    Info.coli = col;
+                    Info.minei = mine;
                     this.dispose();
                     new RoundChooser();
                 }
-            }
-            else {
+            } else if (!beginner.isSelected() && !intermediate.isSelected() && !advanced.isSelected() && !custom.isSelected()) {
+                new TimeDialog(this, "Please select level!", 3);
+            } else {
                 this.dispose();
                 new RoundChooser();
             }

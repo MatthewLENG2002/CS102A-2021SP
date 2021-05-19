@@ -23,9 +23,8 @@ public class StartMenu extends JFrame {
         newGame.setForeground(Color.BLACK);
         newGame.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         newGame.addActionListener(e -> {
-            GameGUI game = new GameGUI();
-            game.setVisible(true);
-            game.start();
+            start.setVisible(false);
+            DifficultySelector ds = new DifficultySelector();
         });
 
         JButton loadGame = new JButton("Load History");
@@ -34,6 +33,7 @@ public class StartMenu extends JFrame {
         loadGame.setForeground(Color.BLACK);
         loadGame.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         loadGame.addActionListener(e -> {
+            start.setVisible(false);
             HistorySelector hs = new HistorySelector();
             hs.setVisible(true);
         });
@@ -44,6 +44,7 @@ public class StartMenu extends JFrame {
         storeButton.setForeground(Color.BLACK);
         storeButton.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         storeButton.addActionListener(e -> {
+            start.setVisible(false);
             Store st = new Store();
             st.setVisible(true);
         });
@@ -80,8 +81,9 @@ public class StartMenu extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        StartMenu.start.setVisible(true);
     }
 
 

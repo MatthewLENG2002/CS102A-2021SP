@@ -15,6 +15,7 @@ public class StatusMap {
 
     public StatusMap(int[][] map){
         this.statusmap = new int[map.length][map[0].length];
+        Info.mineLeft = Info.minei;
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 statusmap[i][j] = 0;
@@ -31,25 +32,33 @@ public class StatusMap {
     }
 
     public static boolean uncover(int x, int y) {
-        if (MineMap.map[x-1][y-1] >=0){
+        if (MineMap.map[x-1][y-1] >=0 && statusmap[x - 1][y - 1] == 0){
             statusmap[x-1][y-1] = 1;
             return true;
-        }
-        else {
-            statusmap[x-1][y-1] = 1;
+        } else if (statusmap[x - 1][y - 1] == 0) {
+            statusmap[x - 1][y - 1] = 1;
+            Info.playerScore[Info.playerNow-1]--;
+            Info.mineLeft--;
             return false;
         }
+
+        return false;
 
     }
 
     public static boolean flag(int x, int y) {
-        if (MineMap.map[x-1][y-1] < 0){
-            statusmap[x-1][y-1] = -1;
+        if (MineMap.map[x - 1][y - 1] < 0 && statusmap[x - 1][y - 1] == 0) {
+            statusmap[x - 1][y - 1] = -1;
+            Info.playerScore[Info.playerNow-1]++;
+            Info.mineLeft--;
+            return true;
+        } else if (statusmap[x - 1][y - 1] == 0) {
+            statusmap[x - 1][y - 1] = 1;
+            Info.playerFaults[Info.playerNow-1]++;
+            return false;
+        } else if (statusmap[x - 1][y - 1] == 1) {
             return true;
         }
-        else {
-            statusmap[x-1][y-1] = -2;
-            return false;
-        }
+        return false;
     }
 }

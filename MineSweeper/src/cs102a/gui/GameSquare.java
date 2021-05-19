@@ -7,6 +7,7 @@ import cs102a.gui.model.SmallGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,19 +15,37 @@ public class GameSquare extends JButton {
     int xLocation;
     int yLocation;
 
-    public GameSquare(int x, int y){
+    public GameSquare(int x, int y, GameBoard g) {
         xLocation = x;
         yLocation = y;
-        this.setIcon(SquareImage(xLocation,yLocation, StatusMap.statusmap, MineMap.map));
+        this.setIcon(SquareImage(xLocation, yLocation, StatusMap.statusmap, MineMap.map));
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1){
-                    StatusMap.uncover(xLocation,yLocation);
-                    GameSquare.this.setIcon(SquareImage(xLocation,yLocation,StatusMap.statusmap, MineMap.map));
+                if (e.getButton() == MouseEvent.BUTTON1) {
+
+                    // regenerate the map if the first trial is the mine
+                    if (Info.roundNow == 0 && MineMap.map[x - 1][y - 1] < 0) {
+                        while (MineMap.map[x - 1][y - 1] < 0) {
+                            if (Info.level <= 3 && Info.level >= 0) {
+                                new StatusMap(new MineMap(Info.level).map);
+                            } else if (Info.level == 4) {
+                                new StatusMap(new MineMap(Info.level, Info.rowi, Info.coli, Info.minei).map);
+                            }
+                        }
+                    }
+                    Info.roundNow++;
+                    if (!StatusMap.uncover(xLocation, yLocation)) {
+                        for (ActionListener l : GameSquare.this.getActionListeners())
+                            GameSquare.this.removeActionListener(l);
+//                        GameSquare.this.setEnabled(false);
+                    }
+                    GameSquare.this.setIcon(SquareImage(xLocation, yLocation, StatusMap.statusmap, MineMap.map));
+
                 }
-                if (e.getButton() == MouseEvent.BUTTON3){
-                    if (!StatusMap.flag(xLocation,yLocation)){
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    Info.roundNow++;
+                    if (!StatusMap.flag(xLocation, yLocation)) {
                         JDialog wrongFlag = new JDialog();
                         wrongFlag.setVisible(true);
                         wrongFlag.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -52,6 +71,7 @@ public class GameSquare extends JButton {
                     }
                     GameSquare.this.setIcon(SquareImage(xLocation,yLocation,StatusMap.statusmap, MineMap.map));
                 }
+                g.infoPanel.refresh();
             }
 
             @Override
