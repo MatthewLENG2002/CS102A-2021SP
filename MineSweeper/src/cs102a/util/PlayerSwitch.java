@@ -1,3 +1,6 @@
+package cs102a.util;
+import cs102a.Info;
+
 public class PlayerSwitch {
 
     public PlayerSwitch(){

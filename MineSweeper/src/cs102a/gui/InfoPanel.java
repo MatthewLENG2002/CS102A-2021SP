@@ -1,6 +1,7 @@
 package cs102a.gui;
 
 import cs102a.Info;
+import cs102a.util.PlayerSwitch;
 
 import javax.swing.*;
 import java.awt.*;
