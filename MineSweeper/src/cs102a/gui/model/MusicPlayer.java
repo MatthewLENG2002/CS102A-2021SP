@@ -1,4 +1,4 @@
-package model;
+package cs102a.gui.model;
 
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;

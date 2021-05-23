@@ -1,4 +1,4 @@
-import model.MusicPlayer;
+package cs102a.gui.model;
 
 public class EQ {
     public static EQ bgm1 = new EQ("bgm1",true);
