@@ -1,4 +1,10 @@
-import model.SmallGrid;
+package cs102a.gui;
+
+import cs102a.Info;
+import cs102a.gui.GameBoard;
+import cs102a.saver.GameSaver;
+import cs102a.util.PlayerSwitch;
+import cs102a.gui.model.SmallGrid;
 
 import javax.swing.*;
 import java.awt.*;

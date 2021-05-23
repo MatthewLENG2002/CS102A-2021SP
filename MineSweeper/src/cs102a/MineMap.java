@@ -82,7 +82,7 @@ public class MineMap {
 
         for (int i = 0; i < temp.length; i++) {
             for (int j = 0; j < temp[0].length; j++) {
-                while (map[i][j] == -9 ) {
+                while (map[i][j] == -9) {
                     return mapGenerator(level);
                 }
             }
