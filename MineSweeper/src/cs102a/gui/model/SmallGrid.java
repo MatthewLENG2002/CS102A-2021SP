@@ -13,5 +13,6 @@ public class SmallGrid extends JPanel {
             }
             this.add(new JLabel());
         }
+        this.setOpaque(false);
     }
 }

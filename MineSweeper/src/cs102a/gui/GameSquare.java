@@ -3,7 +3,10 @@ package cs102a.gui;
 import cs102a.Info;
 import cs102a.MineMap;
 import cs102a.StatusMap;
+import cs102a.gui.model.EQ;
 import cs102a.gui.model.SmallGrid;
+import cs102a.saver.GameSaver;
+import cs102a.util.GameWithdraw;
 
 import javax.swing.*;
 import java.awt.*;

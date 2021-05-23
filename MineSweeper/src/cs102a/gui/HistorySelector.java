@@ -1,6 +1,7 @@
 package cs102a.gui;
 
 import cs102a.gui.model.SmallGrid;
+import cs102a.saver.HistoryLoader;
 
 import javax.swing.*;
 import java.awt.*;

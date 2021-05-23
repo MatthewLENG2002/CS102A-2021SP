@@ -1,16 +1,24 @@
 package cs102a.gui;
 
+import cs102a.Info;
+import cs102a.gui.model.BackgroundPanel;
 import cs102a.gui.model.SmallGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class StartMenu extends JFrame {
 
     public static StartMenu start = new StartMenu();
+    public BackgroundPanel bg = new BackgroundPanel();
 
     public StartMenu() {
         super("Mine Sweeper");
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("History\\Info.txt"));
+            Info.playerPoints= (int[])ois.readObject();
+        } catch (Exception e) { }
 
         JLabel title = new JLabel("Mine Sweeper", JLabel.CENTER);
         title.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 50));
@@ -33,21 +41,21 @@ public class StartMenu extends JFrame {
         loadGame.setForeground(Color.BLACK);
         loadGame.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         loadGame.addActionListener(e -> {
-            start.setVisible(false);
             HistorySelector hs = new HistorySelector();
             hs.setVisible(true);
+            start.setVisible(false);
         });
 
-        JButton storeButton = new JButton("Gadget Mall");
-        storeButton.setOpaque(false);
-        storeButton.setBorder(null);
-        storeButton.setForeground(Color.BLACK);
-        storeButton.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
-        storeButton.addActionListener(e -> {
-            start.setVisible(false);
-            Store st = new Store();
-            st.setVisible(true);
-        });
+//        JButton storeButton = new JButton("Gadget Mall");
+//        storeButton.setOpaque(false);
+//        storeButton.setBorder(null);
+//        storeButton.setForeground(Color.BLACK);
+//        storeButton.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
+//        storeButton.addActionListener(e -> {
+//            Store st = new Store();
+//            st.setVisible(true);
+//            start.setVisible(false);
+//        });
 
         JButton settingButton = new JButton("Settings");
         settingButton.setOpaque(false);
@@ -55,8 +63,8 @@ public class StartMenu extends JFrame {
         settingButton.setForeground(Color.BLACK);
         settingButton.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         settingButton.addActionListener(e -> {
-            start.setVisible(false);
             Settings.settings.setVisible(true);
+            start.setVisible(false);
         });
 
         JButton exit = new JButton("Exit");
@@ -65,16 +73,24 @@ public class StartMenu extends JFrame {
         exit.setForeground(Color.BLACK);
         exit.setFont(new java.awt.Font("Times New Roman", Font.BOLD, 26));
         exit.addActionListener(e -> {
-            start.setVisible(false);
+            int[] playerPointsRecorder = Info.playerPoints;
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("History\\Info.txt"));
+                oos.writeObject(playerPointsRecorder);
+            } catch (Exception ioException) {}
+            this.dispose();
         });
 
-        setLayout(new GridLayout(5, 1, 2, 2));
-        add(new SmallGrid(3, 3, newGame));
-        add(new SmallGrid(3, 3, loadGame));
-        add(new SmallGrid(3, 3, storeButton));
-        add(new SmallGrid(3, 3, settingButton));
-        add(new SmallGrid(3, 3, exit));
 
+        bg.setLayout(new GridLayout(4, 1, 2, 2));
+        bg.add(new SmallGrid(3, 3, newGame));
+        bg.add(new SmallGrid(3, 3, loadGame));
+//        bg.add(new SmallGrid(3, 3, storeButton));
+        bg.add(new SmallGrid(3, 3, settingButton));
+        bg.add(new SmallGrid(3, 3, exit));
+
+        this.add(bg);
+        Info.bgPanel.add(bg);
         this.setSize(500, 500);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

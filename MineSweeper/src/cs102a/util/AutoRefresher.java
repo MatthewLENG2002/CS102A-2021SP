@@ -1,3 +1,5 @@
+import cs102a.Info;
+
 import java.awt.*;
 
 //public class RefreshBot {
@@ -11,21 +13,21 @@ import java.awt.*;
 //    }
 //}
 
-public class AutoRefresher extends Thread {
-    @Override
-    public void run() {
-        while (true) {
-            if (Info.roundLeftTime == 0) {
-                Info.roundLeftTime = 5;
-                Info.round++;
-                continue;
-            }
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Info.roundLeftTime--;
-        }
-    }
-}
+//public class AutoRefresher extends Thread {
+//    @Override
+//    public void run() {
+//        while (true) {
+//            if (Info.roundLeftTime == 0) {
+//                Info.roundLeftTime = 5;
+//                Info.round++;
+//                continue;
+//            }
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            Info.roundLeftTime--;
+//        }
+//    }
+//}

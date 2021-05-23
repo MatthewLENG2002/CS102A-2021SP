@@ -5,15 +5,17 @@ import cs102a.MineMap;
 import cs102a.StatusMap;
 import cs102a.gui.model.EQ;
 import cs102a.saver.GameSaver;
+import cs102a.util.GameWithdraw;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class GameBoard extends JFrame {
     JPanel boardPanel = new JPanel();
-//    InfoPanel infoPanel = new InfoPanel();
-    InfoPanel infoPanel ;
+    //    InfoPanel infoPanel = new InfoPanel();
+    public InfoPanel infoPanel;
     EQ bgm;
 
     public GameBoard() {
@@ -24,7 +26,7 @@ public class GameBoard extends JFrame {
         if (!Info.isHistory) {
             File scFilreDir = new File("Replay");
             File TrxFiles[] = scFilreDir.listFiles();
-            for(File curFile : TrxFiles) {
+            for (File curFile : TrxFiles) {
                 curFile.delete();
             }
             Info.playerScore = new int[]{0, 0};
@@ -45,7 +47,7 @@ public class GameBoard extends JFrame {
 
 
         this.setSize(Info.coli * 20, 20 + Info.rowi * 20 * 2);
-        this.setMinimumSize(new Dimension(180,360));
+        this.setMinimumSize(new Dimension(180, 360));
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -165,7 +167,7 @@ public class GameBoard extends JFrame {
 
         JMenuItem item3p = new JMenuItem("Mute BGM");
         item3p.addActionListener(e -> {
-            if(bgm.changeIsMute())item3p.setText("Play BGM");
+            if (bgm.changeIsMute()) item3p.setText("Play BGM");
             else item3p.setText("Mute BGM");
         });
 
@@ -193,10 +195,10 @@ public class GameBoard extends JFrame {
         });
         JMenuItem item5 = new JMenuItem("Gadget");
         item5.addActionListener(e -> {
-            Info.roundLeftTime +=10;
+            Info.roundLeftTime += 10;
         });
         JMenuItem item6 = new JMenuItem("ResetBoard");
-        item6.addActionListener(e ->{
+        item6.addActionListener(e -> {
             Info.playerScore = new int[]{0, 0};
             Info.playerFaults = new int[]{0, 0};
             Info.roundNow = 0;
@@ -260,4 +262,5 @@ public class GameBoard extends JFrame {
             }
         }
     }
+}
 

@@ -1,5 +1,9 @@
 package cs102a;
 
+import cs102a.gui.model.BackgroundPanel;
+
+import java.util.ArrayList;
+
 public class Info {
     public static int[] playerScore = new int[2];
     public static int[] playerFaults = new int[2];
