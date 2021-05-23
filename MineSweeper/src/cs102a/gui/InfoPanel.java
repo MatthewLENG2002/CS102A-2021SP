@@ -1,10 +1,10 @@
-package cs102a.gui;
-
-import cs102a.Info;
-import cs102a.util.PlayerSwitch;
+import model.SmallGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class InfoPanel extends JPanel {
 
@@ -17,10 +17,34 @@ public class InfoPanel extends JPanel {
     JLabel remainingMine;
     JLabel time;
 
-    public InfoPanel() {
+    public ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+
+
+    public InfoPanel(GameBoard g) {
 
         JPanel detailInfoPanel = new JPanel();
         JPanel basicInfoPanel = new JPanel();
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+
+        ses.scheduleAtFixedRate(() -> {
+            Info.roundLeftTime--;
+            if (Info.roundLeftTime == -1) {
+                Info.roundLeftTime = 10;
+                Info.roundNow++;
+                try {
+                    GameSaver.replaySave();
+                } catch (Exception ioException) {}
+            }
+            PlayerSwitch.playerSwitch();
+            InfoPanel.this.refresh(g);
+        }, 1, 1, TimeUnit.SECONDS);
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+
+
         this.setLayout(new GridLayout(2, 1));
         this.setVisible(true);
 
@@ -74,7 +98,7 @@ public class InfoPanel extends JPanel {
 //        JTextField remainingMineNumber = new JTextField(Info.mineLeft);
 //        remainingMine.setVisible(true);
 //        basicInfoPanel.add(remainingMineNumber);
-        time = new JLabel("Time: ", JLabel.CENTER);
+        time = new JLabel("Time: " + Info.roundLeftTime + "s", JLabel.CENTER);
         time.setVisible(true);
         basicInfoPanel.add(time);
 //        JTextField timeUsage = new JTextField("0");
@@ -82,12 +106,104 @@ public class InfoPanel extends JPanel {
 //        basicInfoPanel.add(timeUsage);
     }
 
-    public void refresh() {
-        new PlayerSwitch();
-        if (Info.playerNow == 1){
+    public void refresh(GameBoard g) {
+        int winState = new PlayerSwitch().winRefresh();
+        switch (winState) {
+            case 0 -> {
+                ses.shutdown();
+                JDialog result = new JDialog();
+                result.setLayout(new GridLayout(2, 1));
+                result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                result.setLocationRelativeTo(null);
+                result.setSize(300, 180);
+                result.setVisible(true);
+                JLabel title = new JLabel("Draw!", JLabel.CENTER);
+                title.setVisible(true);
+                result.add(title);
+                JButton confirm = new JButton("Confirm");
+                confirm.setVisible(true);
+                result.add(new SmallGrid(1, 3, confirm));
+                confirm.addActionListener(e -> {
+                    result.dispose();
+//                    g.dispose();
+//                    StartMenu.start.setVisible(true);
+
+                });
+//                JButton replay = new JButton("Replay");
+//                replay.setVisible(true);
+//                result.add(new SmallGrid(1, 3, replay));
+//                replay.addActionListener(e -> {
+//                    result.dispose();
+//                    g.dispose();
+////                    StartMenu.start.setVisible(true);
+//                    new Replay();
+//                });
+            }
+            case 1 -> {
+                ses.shutdown();
+                JDialog result = new JDialog();
+                result.setLayout(new GridLayout(2, 1));
+                result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                result.setLocationRelativeTo(null);
+                result.setSize(300, 180);
+                result.setVisible(true);
+                JLabel title = new JLabel("Player 1 Wins!", JLabel.CENTER);
+                title.setVisible(true);
+                result.add(title);
+                JButton confirm = new JButton("Confirm");
+                confirm.setVisible(true);
+                result.add(new SmallGrid(1, 3, confirm));
+                confirm.addActionListener(e -> {
+                    result.dispose();
+//                    g.dispose();
+//                    StartMenu.start.setVisible(true);
+                });
+//                JButton replay = new JButton("Replay");
+//                replay.setVisible(true);
+//                result.add(new SmallGrid(1, 3, replay));
+//                replay.addActionListener(e -> {
+//                    result.dispose();
+//                    g.dispose();
+////                    StartMenu.start.setVisible(true);
+//                    new Replay();
+//                });
+            }
+            case 2 -> {
+                ses.shutdown();
+                JDialog result = new JDialog();
+                result.setLayout(new GridLayout(2, 1));
+                result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                result.setLocationRelativeTo(null);
+                result.setSize(300, 180);
+                result.setVisible(true);
+                JLabel title = new JLabel("Player 2 Wins!", JLabel.CENTER);
+                title.setVisible(true);
+                result.add(title);
+                JButton confirm = new JButton("Confirm");
+                confirm.setVisible(true);
+                result.add(new SmallGrid(1, 3, confirm));
+                confirm.addActionListener(e -> {
+                    result.dispose();
+//                    g.dispose();
+//                    StartMenu.start.setVisible(true);
+                });
+//                JButton replay = new JButton("Replay");
+//                replay.setVisible(true);
+//                result.add(new SmallGrid(1, 3, replay));
+//                replay.addActionListener(e -> {
+//                    result.dispose();
+//                    g.dispose();
+////                    StartMenu.start.setVisible(true);
+//                    new Replay();
+//                });
+            }
+            case -1 -> {
+            }
+        }
+        if (Info.playerNow == 1) {
             this.player1.setBackground(Color.RED);
             this.player2.setBackground(Color.GRAY);
-        }else if (Info.playerNow ==2){
+        } else if (Info.playerNow == 2) {
             this.player2.setBackground(Color.RED);
             this.player1.setBackground(Color.GRAY);
         }
@@ -96,7 +212,7 @@ public class InfoPanel extends JPanel {
         this.player2Score.setText("Score: " + Info.playerScore[1]);
         this.player2Faults.setText("Faults: " + Info.playerFaults[1]);
         this.remainingMine.setText("Mine: " + Info.mineLeft);
-        this.time.setText("Time: ");
+        this.time.setText("Time: " + Info.roundLeftTime + "s");
+
     }
 }
-
