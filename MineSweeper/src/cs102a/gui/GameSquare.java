@@ -29,9 +29,7 @@ public class GameSquare extends JButton {
                 if (e.getButton() == MouseEvent.BUTTON1) {
 
 //                    new GameWithdraw(xLocation, yLocation).push(xLocation, yLocation);
-                    try {
-                        GameSaver.replaySave();
-                    } catch (Exception ioException) {}
+
 
                     // regenerate the map if the first trial is the mine
                     if (Info.roundNow == 0 && MineMap.map[x - 1][y - 1] < 0) {
@@ -56,12 +54,14 @@ public class GameSquare extends JButton {
                     autoUncover(xLocation, yLocation);
                     g.refresh();
 
-                }
-                if (e.getButton() == MouseEvent.BUTTON3) {
-//                    new GameWithdraw(xLocation, yLocation).push(xLocation, yLocation);
                     try {
                         GameSaver.replaySave();
                     } catch (Exception ioException) {}
+
+                }
+                if (e.getButton() == MouseEvent.BUTTON3) {
+//                    new GameWithdraw(xLocation, yLocation).push(xLocation, yLocation);
+
                     if (!StatusMap.flag(xLocation, yLocation)) {
                         JDialog wrongFlag = new JDialog();
                         wrongFlag.setVisible(true);
@@ -91,6 +91,9 @@ public class GameSquare extends JButton {
 
                     GameSquare.this.setIcon(SquareImage(xLocation, yLocation, StatusMap.statusmap, MineMap.map));
 
+                    try {
+                        GameSaver.replaySave();
+                    } catch (Exception ioException) {}
                 }
                 Info.roundLeftTime = 10;
                 g.infoPanel.refresh(g);

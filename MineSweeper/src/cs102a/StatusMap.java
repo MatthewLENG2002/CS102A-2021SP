@@ -32,10 +32,13 @@ public class StatusMap {
     }
 
     public static boolean uncover(int x, int y) {
-        if (MineMap.map[x-1][y-1] >=0 && statusmap[x - 1][y - 1] == 0){
-            statusmap[x-1][y-1] = 1;
+//        new GameWithdraw(x, y).push(x, y);
+        if (MineMap.map[x - 1][y - 1] >= 0 && statusmap[x - 1][y - 1] == 0) {
+            Info.roundNow++;
+            statusmap[x - 1][y - 1] = 1;
             return true;
         } else if (statusmap[x - 1][y - 1] == 0) {
+            Info.roundNow++;
             statusmap[x - 1][y - 1] = 1;
             Info.playerScore[Info.playerNow-1]--;
             Info.mineLeft--;
@@ -48,12 +51,15 @@ public class StatusMap {
 
     public static boolean flag(int x, int y) {
         if (MineMap.map[x - 1][y - 1] < 0 && statusmap[x - 1][y - 1] == 0) {
+            Info.roundNow++;
             statusmap[x - 1][y - 1] = -1;
             Info.playerScore[Info.playerNow-1]++;
             Info.mineLeft--;
             return true;
         } else if (statusmap[x - 1][y - 1] == 0) {
+            Info.roundNow++;
             statusmap[x - 1][y - 1] = 1;
+            Info.playerScore[Info.playerNow-1]--;
             Info.playerFaults[Info.playerNow-1]++;
             return false;
         } else if (statusmap[x - 1][y - 1] == 1) {

@@ -14,8 +14,8 @@ import java.io.File;
 
 public class GameBoard extends JFrame {
     JPanel boardPanel = new JPanel();
-    //    InfoPanel infoPanel = new InfoPanel();
-    public InfoPanel infoPanel;
+//    InfoPanel infoPanel = new InfoPanel();
+    public InfoPanel infoPanel ;
     EQ bgm;
 
     public GameBoard() {
@@ -249,6 +249,10 @@ public class GameBoard extends JFrame {
         add(infoPanel);
         infoPanel.refresh(this);
 //        new AutoRefresher().run(infoPanel);
+        try {
+            GameSaver.replaySave();
+        } catch (Exception ioException) {}
+
     }
 
 

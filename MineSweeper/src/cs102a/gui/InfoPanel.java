@@ -5,6 +5,7 @@ import cs102a.gui.GameBoard;
 import cs102a.saver.GameSaver;
 import cs102a.util.PlayerSwitch;
 import cs102a.gui.model.SmallGrid;
+import cs102a.util.Replay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,7 +119,7 @@ public class InfoPanel extends JPanel {
             case 0 -> {
                 ses.shutdown();
                 JDialog result = new JDialog();
-                result.setLayout(new GridLayout(2, 1));
+                result.setLayout(new GridLayout(3, 1));
                 result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 result.setLocationRelativeTo(null);
                 result.setSize(300, 180);
@@ -135,20 +136,20 @@ public class InfoPanel extends JPanel {
 //                    StartMenu.start.setVisible(true);
 
                 });
-//                JButton replay = new JButton("Replay");
-//                replay.setVisible(true);
-//                result.add(new SmallGrid(1, 3, replay));
-//                replay.addActionListener(e -> {
-//                    result.dispose();
+                JButton replay = new JButton("Replay");
+                replay.setVisible(true);
+                result.add(new SmallGrid(1, 3, replay));
+                replay.addActionListener(e -> {
+                    result.dispose();
 //                    g.dispose();
-////                    StartMenu.start.setVisible(true);
-//                    new Replay();
-//                });
+//                    StartMenu.start.setVisible(true);
+                    new Replay();
+                });
             }
             case 1 -> {
                 ses.shutdown();
                 JDialog result = new JDialog();
-                result.setLayout(new GridLayout(2, 1));
+                result.setLayout(new GridLayout(3, 1));
                 result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 result.setLocationRelativeTo(null);
                 result.setSize(300, 180);
@@ -164,20 +165,20 @@ public class InfoPanel extends JPanel {
 //                    g.dispose();
 //                    StartMenu.start.setVisible(true);
                 });
-//                JButton replay = new JButton("Replay");
-//                replay.setVisible(true);
-//                result.add(new SmallGrid(1, 3, replay));
-//                replay.addActionListener(e -> {
-//                    result.dispose();
+                JButton replay = new JButton("Replay");
+                replay.setVisible(true);
+                result.add(new SmallGrid(1, 3, replay));
+                replay.addActionListener(e -> {
+                    result.dispose();
 //                    g.dispose();
-////                    StartMenu.start.setVisible(true);
-//                    new Replay();
-//                });
+//                    StartMenu.start.setVisible(true);
+                    new Replay();
+                });
             }
             case 2 -> {
                 ses.shutdown();
                 JDialog result = new JDialog();
-                result.setLayout(new GridLayout(2, 1));
+                result.setLayout(new GridLayout(3, 1));
                 result.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 result.setLocationRelativeTo(null);
                 result.setSize(300, 180);
@@ -193,15 +194,15 @@ public class InfoPanel extends JPanel {
 //                    g.dispose();
 //                    StartMenu.start.setVisible(true);
                 });
-//                JButton replay = new JButton("Replay");
-//                replay.setVisible(true);
-//                result.add(new SmallGrid(1, 3, replay));
-//                replay.addActionListener(e -> {
-//                    result.dispose();
+                JButton replay = new JButton("Replay");
+                replay.setVisible(true);
+                result.add(new SmallGrid(1, 3, replay));
+                replay.addActionListener(e -> {
+                    result.dispose();
 //                    g.dispose();
-////                    StartMenu.start.setVisible(true);
-//                    new Replay();
-//                });
+//                    StartMenu.start.setVisible(true);
+                    new Replay();
+                });
             }
             case -1 -> {
             }
