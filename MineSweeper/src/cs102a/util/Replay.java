@@ -37,6 +37,7 @@ public class Replay {
 
         replaySes.scheduleAtFixedRate(()->{
             if (replayRoundsNow[0] == lastRoundsRound+1){
+                Info.isHistory = false;
                 replaySes.shutdown();
             }
             else{
@@ -60,7 +61,8 @@ public class Replay {
             }
 
         }, 0, 1, TimeUnit.SECONDS);
-        Info.isHistory = false;
+
+
     }
 }
 
