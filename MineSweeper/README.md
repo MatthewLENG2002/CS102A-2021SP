@@ -1,13 +1,9 @@
-Checklist
----
-+ [x] Demo
-+ [ ] Demo
 
-DDLs
----
-- mm/dd tar
 
 ---
+> Git is used in this project: https://github.com/MatthewLENG2002/CS102A-2021SP
+> 
+> 
 > This project is built under `jdk16` environment,
 > please use new syntactic features or simplify 
 > your code as prompted by ide.  
@@ -35,7 +31,6 @@ DDLs
 >     default -> 3;
 > }
 > ```
-> 
-> see also: https://github.com/HeZean/SUSTech-CS102A
+>
 ---
-*Last modified: Chris 04/13*
+*Last modified: Matthew 05/26*
